@@ -18,12 +18,12 @@
 <body>
   <div id="app" class="body-wrap">
     <div class="head">
-      <h1>Boolflix</h1>
+      <h1>Netflix</h1>
       <input type="text" name="search-movie" v-on:keyup.13="searchMovie"  v-model="inputSearch" value="">
     </div>
     <ul class="movie-list">
       <li v-for="movie in chosenMovies">
-        <img class="movie-img" :src="'https://image.tmdb.org/t/p/w300'+ movie.poster_path" :alt="movie.title">
+        <img :class="movie.poster_path === null? 'imgNull' : true" class="movie-img" :src="'https://image.tmdb.org/t/p/original'+ movie.poster_path" :alt="movie.title">
         <ul class="movie-info">
           <li>Titolo: <span>{{movie.title}}</span></li>
           <li>Titolo originale: <span>{{movie.original_title}}</span></li>

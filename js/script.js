@@ -1,8 +1,3 @@
-/* Api key
-6e64cd787a186dfc16b5296cbc3e06c2
-
-"https://api.themoviedb.org/3/search/movie?api_key=&query=ritorno+al+futuro"
-*/
 const app = new Vue ({
   el: "#app",
   data: {
@@ -11,10 +6,14 @@ const app = new Vue ({
   },
   methods: {
     searchMovie: function(){
-      axios.get("https://api.themoviedb.org/3/search/movie?api_key=6e64cd787a186dfc16b5296cbc3e06c2&language=it-IT&query=ritorno+al+futuro")
+      axios.get("https://api.themoviedb.org/3/search/movie?api_key=6e64cd787a186dfc16b5296cbc3e06c2&language=it-IT",{
+        params: {
+          query: this.inputSearch
+        }
+      })
       .then( response =>{
         this.chosenMovies = response.data.results;
-        // console.log(response.data.results);
+        console.log(response.data.results);
       });
     }
   }
