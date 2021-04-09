@@ -37,17 +37,11 @@
 }
 
 .movie-list > li{
-  padding: 20px;
   margin: 10px;
   list-style: none;
   border: 4px solid #828282;
   background-color:  #000;
-  width: 250px;
   position: relative;
-}
-
-.movie-img{
-  height: 300px;
 }
 
 .movie-info{
@@ -57,9 +51,11 @@
   height: 100%;
   width:100%;
   display: none;
+  background-color: #000;
   color: #fff;
   padding: 30px 10px;
   list-style: none;
+  overflow: auto;
 }
 
 .movie-list li:hover .movie-info{

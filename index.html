@@ -19,16 +19,16 @@
   <div id="app" class="body-wrap">
     <div class="head">
       <h1>Boolflix</h1>
-      <input type="text" name="search-film" value="">
+      <input type="text" name="search-movie" v-on:keyup.13="searchMovie"  v-model="inputSearch" value="">
     </div>
     <ul class="movie-list">
-      <li v-for="">
-        <img class="movie-img" :src="" :alt="">
+      <li v-for="movie in chosenMovies">
+        <img class="movie-img" :src="'https://image.tmdb.org/t/p/w300'+ movie.poster_path" :alt="movie.title">
         <ul class="movie-info">
-          <li>Titolo: </li>
-          <li>Titolo originale: </li>
-          <li>Voto: </li>
-          <li>Overview: </li>
+          <li>Titolo: <span>{{movie.title}}</span></li>
+          <li>Titolo originale: <span>{{movie.original_title}}</span></li>
+          <li>Voto: <span>{{movie.vote_average}}</span></li>
+          <li>Overview: <span>{{movie.overview}}</span></li>
         </ul>
       </li>
     </ul>
