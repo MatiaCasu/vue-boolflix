@@ -12,23 +12,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
   <!-- /font -->
+  <!-- font awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <!-- /font awesome -->
   <link rel="stylesheet" href="css/style.css">
   <title>Boolflix</title>
 </head>
 <body>
   <div id="app" class="body-wrap">
     <div class="head">
-      <h1>Netflix</h1>
+      <h1>Boolflix</h1>
       <input type="text" name="search-movie" v-on:keyup.13="searchMovie"  v-model="inputSearch" value="">
     </div>
     <ul class="movie-list">
       <li v-for="movie in chosenMovies">
         <img :class="movie.poster_path === null? 'imgNull' : true" class="movie-img" :src="'https://image.tmdb.org/t/p/original'+ movie.poster_path" :alt="movie.title">
         <ul class="movie-info">
-          <li>Titolo: <span>{{movie.title}}</span></li>
-          <li>Titolo originale: <span>{{movie.original_title}}</span></li>
-          <li>Voto: <span>{{movie.vote_average}}</span></li>
-          <li>Overview: <span>{{movie.overview}}</span></li>
+          <li><h4>Titolo: </h4><p> {{movie.title}}</p></li>
+          <li><h4>Titolo originale: </h4><p>{{movie.original_title}}</p></li>
+          <li><h4>Lingua: </h4><p>{{movie.original_language}}</p></li>
+          <li><h4>Voto: </h4>
+            <div v-for="n in 5">
+              <i :class="transformVote(movie.vote_average, n)" class="fa-star vote-star"></i>
+            </div>
+          </li>
+          <li><h4>Overview: </h4><p>{{movie.overview}}</p></li>
         </ul>
       </li>
     </ul>

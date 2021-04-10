@@ -15,9 +15,18 @@ const app = new Vue ({
       })
       .then( response =>{
         this.chosenMovies = response.data.results;
-        console.log(response.data.results);
         this.inputSearch = "";
+        // console.log(response.data.results);
       });
+    },
+    transformVote : function(vote, starIndex){
+      let voteStar = Math.ceil(vote / 2);
+      if(voteStar >= starIndex){
+        return "fas"
+      }
+      else{
+        return "far"
+      }
     }
   }
 });
