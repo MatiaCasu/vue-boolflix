@@ -26,17 +26,25 @@
     </div>
     <ul class="movie-list">
       <li v-for="movie in chosenMovies">
-        <img :class="movie.poster_path === null? 'imgNull' : true" class="movie-img" :src="'https://image.tmdb.org/t/p/original'+ movie.poster_path" :alt="movie.title">
-        <ul class="movie-info">
-          <li><h4>Titolo: </h4><p> {{movie.title}}</p></li>
-          <li><h4>Titolo originale: </h4><p>{{movie.original_title}}</p></li>
-          <li><h4>Lingua: </h4><p>{{movie.original_language}}</p></li>
-          <li><h4>Voto: </h4>
+        <img :class="movie.poster_path === null? 'imgNull' : true" class="movie-img" :src="'https://image.tmdb.org/t/p/original'+ (movie.poster_path || movie.profile_path)" :alt="movie.title || movie.name">
+        <ul class="movie-info"  v-if="movie.media_type !== 'person'">
+          <li><h4>Titolo:</h4><p>{{movie.title || movie.name}}</p></li>
+          <li><h4>Titolo originale:</h4><p>{{movie.original_title || movie.original_name}}</p></li>
+          <li><h4>Lingua:</h4><p>{{movie.original_language}}</p></li>
+          <li><h4>Voto:</h4>
             <div v-for="n in 5">
-              <i :class="transformVote(movie.vote_average, n)" class="fa-star vote-star"></i>
+              <i :class="transformVote(movie.vote_average, n)" class="fa-star"></i>
             </div>
           </li>
-          <li><h4>Overview: </h4><p>{{movie.overview}}</p></li>
+          <li><h4>Overview:</h4><p>{{movie.overview}}</p></li>
+        </ul>
+        <ul class="movie-info"  v-if="movie.media_type === 'person'">
+          <li><h4>Nome:</h4><p>{{movie.name}}</p></li>
+          <li><h4>Conosciuto per:</h4>
+            <ul class="actor-movie" v-for="actorMovie in movie.known_for">
+              <li>{{actorMovie.title}}</li>
+            </ul>
+          </li>
         </ul>
       </li>
     </ul>

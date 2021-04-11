@@ -2,11 +2,11 @@ const app = new Vue ({
   el: "#app",
   data: {
     inputSearch: "",
-    chosenMovies: [],
+    chosenMovies: []
   },
   methods: {
     searchMovie: function(){
-      axios.get("https://api.themoviedb.org/3/search/movie",{
+      axios.get("https://api.themoviedb.org/3/search/multi",{
         params: {
           api_key: "6e64cd787a186dfc16b5296cbc3e06c2",
           language: "it-IT",
