@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+ul.list-unstyled{
+  list-style: none;
+}
+
 .body-wrap{
   width: 100%;
   min-height: 100vh;
@@ -96,9 +100,14 @@ i.fa-star{
 }
 
 .actor-movie > li{
-  margin: 5px 0;
+  margin: 15px;
 }
 
 .movie-info > li > h4{
   margin: 0 5px;
+}
+
+.flags{
+  display: flex;
+  align-items: center;
 }

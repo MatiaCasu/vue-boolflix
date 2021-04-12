@@ -24,13 +24,14 @@
       <h1>Boolflix</h1>
       <input type="text" name="search-movie" v-on:keyup.13="searchMovie"  v-model="inputSearch" value="">
     </div>
-    <ul class="movie-list">
+    <ul class="movie-list list-unstyled">
       <li v-for="movie in chosenMovies">
         <img :class="movie.poster_path === null? 'imgNull' : true" class="movie-img" :src="'https://image.tmdb.org/t/p/original'+ (movie.poster_path || movie.profile_path)" :alt="movie.title || movie.name">
-        <ul class="movie-info"  v-if="movie.media_type !== 'person'">
+        <ul class="movie-info list-unstyled"  v-if="movie.media_type !== 'person'">
           <li><h4>Titolo:</h4><p>{{movie.title || movie.name}}</p></li>
           <li><h4>Titolo originale:</h4><p>{{movie.original_title || movie.original_name}}</p></li>
-          <li><h4>Lingua:</h4><p>{{movie.original_language}}</p></li>
+          <li class="flags"><h4>Lingua:</h4>
+            <img :src="'https://www.countryflags.io/' + changeFlag(movie.original_language) + '/shiny/32.png'" :alt="movie.original_language"></li>
           <li><h4>Voto:</h4>
             <div v-for="n in 5">
               <i :class="transformVote(movie.vote_average, n)" class="fa-star"></i>
@@ -38,10 +39,12 @@
           </li>
           <li><h4>Overview:</h4><p>{{movie.overview}}</p></li>
         </ul>
-        <ul class="movie-info"  v-if="movie.media_type === 'person'">
+        <ul class="movie-info list-unstyled" v-if="movie.media_type === 'person'">
           <li><h4>Nome:</h4><p>{{movie.name}}</p></li>
-          <li><h4>Conosciuto per:</h4>
-            <ul class="actor-movie" v-for="actorMovie in movie.known_for">
+          <li>
+            <h4 v-if="movie.gender === 2">Conosciuto per:</h4>
+            <h4 v-else>Conosciuta per:</h4>
+            <ul class="actor-movie list-unstyled" v-for="actorMovie in movie.known_for">
               <li>{{actorMovie.title}}</li>
             </ul>
           </li>

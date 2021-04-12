@@ -2,7 +2,7 @@ const app = new Vue ({
   el: "#app",
   data: {
     inputSearch: "",
-    chosenMovies: []
+    chosenMovies: [],
   },
   methods: {
     searchMovie: function(){
@@ -26,6 +26,29 @@ const app = new Vue ({
       }
       else{
         return "far"
+      }
+    },
+    changeFlag:  function(language){
+      if(language === 'en'){
+        return 'us'
+      }
+      else if(language === 'cs'){
+        return 'cz'
+      }
+      else if(language === 'ja'){
+        return 'jp'
+      }
+      else if(language === 'zh'){
+        return 'cn'
+      }
+      else if(language === 'ko'){
+        return 'kr'
+      }
+      else if(language === 'hi'){
+        return 'in'
+      }
+      else {
+        return language
       }
     }
   }
