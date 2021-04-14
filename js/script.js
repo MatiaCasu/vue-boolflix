@@ -2,22 +2,62 @@ const app = new Vue ({
   el: "#app",
   data: {
     inputSearch: "",
-    chosenMovies: [],
+    all: [],
+    movies: [],
+    tv: [],
+    axiosElement:{
+      uri: "https://api.themoviedb.org/3",
+      httpBody: {
+        movie: "/search/movie",
+        tv: "/search/tv"
+      },
+      api: "6e64cd787a186dfc16b5296cbc3e06c2",
+      languagesKey: {
+        ita: "it-IT",
+      }
+    }
   },
   methods: {
     searchMovie: function(){
-      axios.get("https://api.themoviedb.org/3/search/multi",{
+      // Chiamata Film
+      axios.get(this.axiosElement.uri + this.axiosElement.httpBody.movie,{
         params: {
-          api_key: "6e64cd787a186dfc16b5296cbc3e06c2",
-          language: "it-IT",
+          api_key: this.axiosElement.api,
+          language: this.axiosElement.languagesKey.ita,
           query: this.inputSearch
         }
       })
-      .then( response =>{
-        this.chosenMovies = response.data.results;
-        this.inputSearch = "";
-        // console.log(response.data.results);
+      .then( (response) =>{
+        this.movies = [];
+        this.movies.push(...response.data.results);
+        this.movies.sort((a, b) =>{
+          return b.vote_count - a.vote_count
+        });
+        this.all.push(...response.data.results);
       });
+
+      // Chiamata Serie TV
+      axios.get(this.axiosElement.uri + this.axiosElement.httpBody.tv,{
+        params: {
+          api_key: this.axiosElement.api,
+          language: this.axiosElement.languagesKey.ita,
+          query: this.inputSearch
+        }
+      })
+      .then( (response) =>{
+        this.tv = [];
+        this.all = [];
+        this.inputSearch = "";
+        this.tv.push(...response.data.results);
+        this.all.push(...response.data.results);
+        this.tv.sort((a, b) =>{
+          return b.vote_count - a.vote_count
+        });
+        this.all.sort((a, b) =>{
+          return b.vote_count - a.vote_count
+        });
+      });
+      // console.log(this.all, this.movies, this.tv);
     },
     transformVote : function(vote, starIndex){
       let voteStar = Math.ceil(vote / 2);

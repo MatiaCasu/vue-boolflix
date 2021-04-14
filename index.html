@@ -22,14 +22,39 @@
   <div id="app" class="body-wrap">
     <div class="head">
       <h1>Boolflix</h1>
-      <input type="text" name="search-movie" v-on:keyup.13="searchMovie"  v-model="inputSearch" value="">
+      <div class="search">
+        <button @click="searchMovie" type="button" name="button"><i class="fas fa-search"></i></button>
+        <input type="text" name="search-movie" v-on:keyup.13="searchMovie"  v-model="inputSearch" value="">
+      </div>
     </div>
-    <ul class="movie-list list-unstyled">
-      <li v-for="movie in chosenMovies">
-        <img :class="movie.poster_path === null? 'imgNull' : true" class="movie-img" :src="'https://image.tmdb.org/t/p/original'+ (movie.poster_path || movie.profile_path)" :alt="movie.title || movie.name">
-        <ul class="movie-info list-unstyled"  v-if="movie.media_type !== 'person'">
-          <li><h4>Titolo:</h4><p>{{movie.title || movie.name}}</p></li>
-          <li><h4>Titolo originale:</h4><p>{{movie.original_title || movie.original_name}}</p></li>
+    <div class="results-container" v-show=" all.length !== 0 ">
+      <h2 class="title-categories" class="title-categories">All</h2>
+      <ul class="results-list list-unstyled">
+        <li v-for="element in all">
+          <img :class="element.poster_path === null? 'imgNull' : true" class="results-img" :src="'https://image.tmdb.org/t/p/original'+ element.poster_path" :alt="element.title || element.name">
+          <ul class="results-info list-unstyled">
+            <li><h4>Titolo:</h4><p>{{element.title || element.name}}</p></li>
+            <li><h4>Titolo originale:</h4><p>{{element.original_title || element.original_name}}</p></li>
+            <li class="flags"><h4>Lingua:</h4>
+              <img :src="'https://www.countryflags.io/' + changeFlag(element.original_language) + '/shiny/32.png'" :alt="element.original_language"></li>
+            <li><h4>Voto:</h4>
+              <div v-for="n in 5">
+                <i :class="transformVote(element.vote_average, n)" class="fa-star"></i>
+              </div>
+            </li>
+            <li><h4>Overview:</h4><p>{{element.overview}}</p></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="results-container" v-show=" movies.length !== 0 ">
+      <h2 class="title-categories">Movies</h2>
+      <ul class="results-list list-unstyled">
+        <li v-for="movie in movies">
+        <img :class="movie.poster_path === null? 'imgNull' : true" class="results-img" :src="'https://image.tmdb.org/t/p/original'+ movie.poster_path" :alt="movie.title">
+        <ul class="results-info list-unstyled">
+          <li><h4>Titolo:</h4><p>{{movie.title}}</p></li>
+          <li><h4>Titolo originale:</h4><p>{{movie.original_title}}</p></li>
           <li class="flags"><h4>Lingua:</h4>
             <img :src="'https://www.countryflags.io/' + changeFlag(movie.original_language) + '/shiny/32.png'" :alt="movie.original_language"></li>
           <li><h4>Voto:</h4>
@@ -39,18 +64,29 @@
           </li>
           <li><h4>Overview:</h4><p>{{movie.overview}}</p></li>
         </ul>
-        <ul class="movie-info list-unstyled" v-if="movie.media_type === 'person'">
-          <li><h4>Nome:</h4><p>{{movie.name}}</p></li>
-          <li>
-            <h4 v-if="movie.gender === 2">Conosciuto per:</h4>
-            <h4 v-else>Conosciuta per:</h4>
-            <ul class="actor-movie list-unstyled" v-for="actorMovie in movie.known_for">
-              <li>{{actorMovie.title}}</li>
-            </ul>
-          </li>
-        </ul>
       </li>
-    </ul>
+      </ul>
+    </div>
+    <div class="results-container"  v-show=" tv.length !== 0 ">
+      <h2 class="title-categories">ShowTv</h2>
+      <ul class="results-list list-unstyled">
+        <li v-for="show in tv">
+          <img :class="show.poster_path === null? 'imgNull' : true" class="results-img" :src="'https://image.tmdb.org/t/p/original'+ show.poster_path" :alt="show.name">
+          <ul class="results-info list-unstyled">
+            <li><h4>Titolo:</h4><p>{{show.name}}</p></li>
+            <li><h4>Titolo originale:</h4><p>{{show.original_name}}</p></li>
+            <li class="flags"><h4>Lingua:</h4>
+              <img :src="'https://www.countryflags.io/' + changeFlag(show.original_language) + '/shiny/32.png'" :alt="show.original_language"></li>
+            <li><h4>Voto:</h4>
+              <div v-for="n in 5">
+                <i :class="transformVote(show.vote_average, n)" class="fa-star"></i>
+              </div>
+            </li>
+            <li><h4>Overview:</h4><p>{{show.overview}}</p></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
   <script src="js/script.js"></script>
 </body>
