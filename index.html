@@ -23,8 +23,8 @@
     <div class="head">
       <h1>Boolflix</h1>
       <div class="search">
-        <button @click="searchMovie" type="button" name="button"><i class="fas fa-search"></i></button>
         <input type="text" name="search-movie" v-on:keyup.13="searchMovie"  v-model="inputSearch" value="">
+        <button @click="searchMovie" type="button" name="button"><i class="fas fa-search"></i></button>
       </div>
     </div>
     <div class="results-container" v-show=" all.length !== 0 ">
