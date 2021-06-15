@@ -31,15 +31,15 @@
       <h2 class="title-categories" class="title-categories">All</h2>
       <ul class="results-list list-unstyled">
         <li v-for="element in all">
-          <img :class="element.poster_path === null? 'imgNull' : true" class="results-img" :src="'https://image.tmdb.org/t/p/original'+ element.poster_path" :alt="element.title || element.name">
+          <img :class="element.poster_path === null? 'img-null' : true" class="results-img" :src="'https://image.tmdb.org/t/p/original'+ element.poster_path" :alt="element.title || element.name">
           <ul class="results-info list-unstyled">
             <li><h4>Titolo:</h4><p>{{element.title || element.name}}</p></li>
             <li><h4>Titolo originale:</h4><p>{{element.original_title || element.original_name}}</p></li>
             <li class="flags"><h4>Lingua:</h4>
               <img :src="'https://www.countryflags.io/' + changeFlag(element.original_language) + '/shiny/32.png'" :alt="element.original_language"></li>
             <li><h4>Voto:</h4>
-              <div v-for="n in 5">
-                <i :class="transformVote(element.vote_average, n)" class="fa-star"></i>
+              <div>
+                <i v-for="n in 5" :class="transformVote(element.vote_average, n)" class="fa-star"></i>
               </div>
             </li>
             <li><h4>Overview:</h4><p>{{element.overview}}</p></li>
@@ -51,15 +51,15 @@
       <h2 class="title-categories">Movies</h2>
       <ul class="results-list list-unstyled">
         <li v-for="movie in movies">
-        <img :class="movie.poster_path === null? 'imgNull' : true" class="results-img" :src="'https://image.tmdb.org/t/p/original'+ movie.poster_path" :alt="movie.title">
+        <img :class="movie.poster_path === null? 'img-null' : true" class="results-img" :src="'https://image.tmdb.org/t/p/original'+ movie.poster_path" :alt="movie.title">
         <ul class="results-info list-unstyled">
           <li><h4>Titolo:</h4><p>{{movie.title}}</p></li>
           <li><h4>Titolo originale:</h4><p>{{movie.original_title}}</p></li>
           <li class="flags"><h4>Lingua:</h4>
             <img :src="'https://www.countryflags.io/' + changeFlag(movie.original_language) + '/shiny/32.png'" :alt="movie.original_language"></li>
           <li><h4>Voto:</h4>
-            <div v-for="n in 5">
-              <i :class="transformVote(movie.vote_average, n)" class="fa-star"></i>
+            <div>
+              <i v-for="n in 5" :class="transformVote(movie.vote_average, n)" class="fa-star"></i>
             </div>
           </li>
           <li><h4>Overview:</h4><p>{{movie.overview}}</p></li>
@@ -71,15 +71,15 @@
       <h2 class="title-categories">ShowTv</h2>
       <ul class="results-list list-unstyled">
         <li v-for="show in tv">
-          <img :class="show.poster_path === null? 'imgNull' : true" class="results-img" :src="'https://image.tmdb.org/t/p/original'+ show.poster_path" :alt="show.name">
+          <img :class="show.poster_path === null? 'img-null' : true" class="results-img" :src="'https://image.tmdb.org/t/p/original'+ show.poster_path" :alt="show.name">
           <ul class="results-info list-unstyled">
             <li><h4>Titolo:</h4><p>{{show.name}}</p></li>
             <li><h4>Titolo originale:</h4><p>{{show.original_name}}</p></li>
             <li class="flags"><h4>Lingua:</h4>
               <img :src="'https://www.countryflags.io/' + changeFlag(show.original_language) + '/shiny/32.png'" :alt="show.original_language"></li>
             <li><h4>Voto:</h4>
-              <div v-for="n in 5">
-                <i :class="transformVote(show.vote_average, n)" class="fa-star"></i>
+              <div>
+                <i v-for="n in 5" :class="transformVote(show.vote_average, n)" class="fa-star"></i>
               </div>
             </li>
             <li><h4>Overview:</h4><p>{{show.overview}}</p></li>

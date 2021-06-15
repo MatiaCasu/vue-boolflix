@@ -1,52 +1,51 @@
 const app = new Vue ({
   el: "#app",
   data: {
+  //  data
     inputSearch: "",
     all: [],
     movies: [],
     tv: [],
-    axiosElement:{
-      uri: "https://api.themoviedb.org/3",
-      httpBody: {
-        movie: "/search/movie",
-        tv: "/search/tv"
-      },
-      api: "6e64cd787a186dfc16b5296cbc3e06c2",
-      languagesKey: {
-        ita: "it-IT",
+
+    // axiosElement
+    uri: "https://api.themoviedb.org/3/search/",
+    httpBody: {
+      movie: "movie",
+      tv: "tv"
+    }
+  },
+  //  /data
+  computed: {
+    axiosParams: function(){
+      return {
+        params: {
+          api_key: "6e64cd787a186dfc16b5296cbc3e06c2",
+          language: "it-IT",
+          query: this.inputSearch
+        }
       }
     }
   },
+  // methods
   methods: {
     searchMovie: function(){
       // Chiamata Film
-      axios.get(this.axiosElement.uri + this.axiosElement.httpBody.movie,{
-        params: {
-          api_key: this.axiosElement.api,
-          language: this.axiosElement.languagesKey.ita,
-          query: this.inputSearch
-        }
-      })
-      .then( (response) =>{
-        this.movies = [];
-        this.movies.push(...response.data.results);
-        this.movies.sort((a, b) =>{
-          return b.vote_count - a.vote_count
+      axios.get(this.uri + this.httpBody.movie, this.axiosParams)
+        .then( (response) =>{
+          this.movies = [];
+          this.movies.push(...response.data.results);
+          this.movies.sort((a, b) =>{
+            return b.vote_count - a.vote_count
+          });
+          this.all.push(...response.data.results);
+          console.log(response.data.results);
         });
-        this.all.push(...response.data.results);
-      });
 
       // Chiamata Serie TV
-      axios.get(this.axiosElement.uri + this.axiosElement.httpBody.tv,{
-        params: {
-          api_key: this.axiosElement.api,
-          language: this.axiosElement.languagesKey.ita,
-          query: this.inputSearch
-        }
-      })
+       axios.get(this.uri + this.httpBody.tv, this.axiosParams)
       .then( (response) =>{
-        this.tv = [];
         this.all = [];
+        this.tv = [];
         this.inputSearch = "";
         this.tv.push(...response.data.results);
         this.all.push(...response.data.results);
@@ -56,11 +55,12 @@ const app = new Vue ({
         this.all.sort((a, b) =>{
           return b.vote_count - a.vote_count
         });
+        console.log(this.all, this.movies, this.tv);
       });
-      // console.log(this.all, this.movies, this.tv);
     },
     transformVote : function(vote, starIndex){
-      let voteStar = Math.ceil(vote / 2);
+      vote = parseInt(vote.toFixed());
+      let voteStar = vote / 2;
       if(voteStar >= starIndex){
         return "fas"
       }
@@ -91,5 +91,7 @@ const app = new Vue ({
         return language
       }
     }
-  }
+  },
+  // /methods
+
 });
